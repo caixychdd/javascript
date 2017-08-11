@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.2.1.js"></script>
+    <style>
+        *{
+            padding: 0px;
+            margin: 0px;
+        }
+        #input_word{
+            width: 488px;
+            height: 30px;
+            border-top:1px solid #9a9a9a;
+            border-left:1px solid #9a9a9a;
+            border-right:#cdcdcd 1px solid;
+            border-bottom:#cdcdcd 1px solid;
+            display: block;
+            margin: 10px auto;
+            font-size: 16px;
+            line-height: 30px;
+            text-indent: 10px;
+        }
+        #list{
+            width: 490px;
+            border: 1px solid #817F82;
+            margin:0 auto;
+        }
+        #list li{
+            font-size: 14px;
+            line-height: 25px;
+            list-style: none;
+            text-indent: 9px;
+            font-weight: 800;
+        }
+        #list li span{
+            font-weight:400;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('#input_word').keyup(function () {
+                var keyword=$(this).val();//获取表单内容
+                $.ajax({
+                    url:"baidu.php",//数据发送地址
+                    type:'post',//数据传送方式
+                    data:{'kw':'keyword'},
+                        //需要传送的数据，字符串和对象类型的数据
+                    dataType:'json',//返回的数据格式
+                    success:function (re) {
+//                            alert(re);//这是成功接收到返回结果后执行的函数
+                        $('#list').empty();
+                        for(var i=0;i<re.length;i++)
+                        {
+                           re[i].replace(keyword,'<span>'+keyword+'</span>');
+                            $('#list').append('<li>'+re[i]+'</li>');
+                        }
+                    }
+            })
+        })
+    </script>
+</head>
+<body>
+<input type="text" id="input_word">
+<ul id="list">
+    <!--<li><span>我们</span>是测试的数据</li>-->
+    <!--<li><span>我们</span>是测试的数据</li>-->
+    <!--<li><span>我们</span>是测试的数据</li>-->
+</ul>
+</body>
+</html>
